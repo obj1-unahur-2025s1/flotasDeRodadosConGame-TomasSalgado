@@ -1,3 +1,5 @@
+import pedidos.*
+
 class Corsa{
 
   var property color
@@ -12,6 +14,15 @@ class Corsa{
 
   method velMax(){
     return 150
+  }
+
+  method initialize(){
+    if( not colores.validos().contains(color))
+    self.error(self.color().toString() + " no es un color valido") 
+  }
+
+  method puedeSatisfacerPedido(){
+    return ( self.velMax() - pedidos.velocidadRequerida() ) > 10
   }
 
 }
@@ -123,4 +134,18 @@ class Especial{
   var property velMax
   const property peso
   var property color
+
+  method initialize(){
+    if( not colores.validos().contains(color)){
+    self.error(self.color().toString() + " no es un color valido") 
+    }
+
+    if(not peso.between(100, 1300)){
+      self.error( "Tu veihculo especial no cumple con los pesos estipulados")
+    } 
+  }
+}
+
+object colores {
+  method validos() = #{"rojo", "verde", "azul", "blanco", "beige"}
 }

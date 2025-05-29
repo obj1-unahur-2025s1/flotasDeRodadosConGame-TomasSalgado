@@ -1,5 +1,6 @@
 import autos.*
 import dependencias.*
+import pedidos.*
 
 
 describe "test con 2 dependencias"{
@@ -44,10 +45,50 @@ describe "test con 2 dependencias"{
 
 
 
+}
 
 
+describe "test con cachito sobre los pedidos"{
 
+  method initialize(){
 
+    const cachito = new Corsa(color = "rojo")
+    const pedidoParaCachito = new Pedidos(
+      distanciaARecorrer = 960,
+     tiempoMaximo = 8,
+      cantidadPasajeros = 4,
+       coloresIncompatibles = #{"negro", "azul"})
 
+  }
+
+  test "cachito puede satisfacer el pedido"{
+    const cachito = new Corsa(color = "rojo")
+    const pedidoParaCachito = new Pedidos(
+      distanciaARecorrer = 960,
+     tiempoMaximo = 8,
+      cantidadPasajeros = 4,
+       coloresIncompatibles = #{"negro", "azul"})
+    assert.that(pedidoParaCachito.puedeSatisfacerPedido(cachito))
+  }
+
+  test "si se cambian ciertas cosas, cachito no puede satisfacer el pedido"{
+    const cachito = new Corsa(color = "rojo")
+    const pedidoParaCachito = new Pedidos(
+      distanciaARecorrer = 960,
+     tiempoMaximo = 8,
+      cantidadPasajeros = 6,
+       coloresIncompatibles = #{"negro", "azul", "rojo"})
+       assert.notThat(pedidoParaCachito.puedeSatisfacerPedido(cachito))
+   }
+
+   test "si se cambian el tiempo maximo a 6, cachito no puede satisfacerlo"{
+    const cachito = new Corsa(color = "rojo")
+    const pedidoParaCachito = new Pedidos(
+      distanciaARecorrer = 960,
+     tiempoMaximo = 6,
+      cantidadPasajeros = 4,
+       coloresIncompatibles = #{"negro", "azul"})
+       assert.notThat(pedidoParaCachito.puedeSatisfacerPedido(cachito))
+   }
 }
 

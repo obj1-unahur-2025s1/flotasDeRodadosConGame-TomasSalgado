@@ -5,6 +5,8 @@ class Dependencia {
 
     var property empleados
 
+    const pedidosHechos = #{}
+
     method agregarAFlota(rodado){
         flota.add(rodado)
     }
@@ -48,6 +50,11 @@ class Dependencia {
     method esGrande(){
         return empleados >= 40 && flota.size() >= 5
     }
+
+    method cantidadPasajerosEnPedidos(){
+        return pedidosHechos.sum({p => p.cantidadPasajeros()})
+    }
+
+    
+    
 }
-
-
