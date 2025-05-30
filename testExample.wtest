@@ -47,48 +47,70 @@ describe "test con 2 dependencias"{
 
 }
 
-
+ //////////////////////////////////////////////// Parte 2 ////////////////////////////////////////////////////////////////////
 describe "test con cachito sobre los pedidos"{
 
-  method initialize(){
-
     const cachito = new Corsa(color = "rojo")
     const pedidoParaCachito = new Pedidos(
       distanciaARecorrer = 960,
      tiempoMaximo = 8,
       cantidadPasajeros = 4,
        coloresIncompatibles = #{"negro", "azul"})
+  
+  
+  
 
-  }
 
   test "cachito puede satisfacer el pedido"{
-    const cachito = new Corsa(color = "rojo")
-    const pedidoParaCachito = new Pedidos(
-      distanciaARecorrer = 960,
-     tiempoMaximo = 8,
-      cantidadPasajeros = 4,
-       coloresIncompatibles = #{"negro", "azul"})
+   
     assert.that(pedidoParaCachito.puedeSatisfacerPedido(cachito))
   }
 
   test "si se cambian ciertas cosas, cachito no puede satisfacer el pedido"{
-    const cachito = new Corsa(color = "rojo")
-    const pedidoParaCachito = new Pedidos(
-      distanciaARecorrer = 960,
-     tiempoMaximo = 8,
-      cantidadPasajeros = 6,
-       coloresIncompatibles = #{"negro", "azul", "rojo"})
+    pedidoParaCachito.agregarColorIncompatible("rojo")
        assert.notThat(pedidoParaCachito.puedeSatisfacerPedido(cachito))
    }
 
    test "si se cambian el tiempo maximo a 6, cachito no puede satisfacerlo"{
-    const cachito = new Corsa(color = "rojo")
-    const pedidoParaCachito = new Pedidos(
-      distanciaARecorrer = 960,
-     tiempoMaximo = 6,
-      cantidadPasajeros = 4,
-       coloresIncompatibles = #{"negro", "azul"})
-       assert.notThat(pedidoParaCachito.puedeSatisfacerPedido(cachito))
+    pedidoParaCachito.relajar()
+    pedidoParaCachito.relajar()
+    assert.notThat(pedidoParaCachito.puedeSatisfacerPedido(cachito))
    }
 }
 
+///////////////////////////////////////////// Parte 3 ////////////////////////////////////////////////////////////////
+
+describe "test de dependencia con pedidos " {
+    const deportes = new Dependencia(empleados = 45)
+    const cultura = new Dependencia(empleados =31)
+    const cachito = new Corsa(color="rojo")
+    const esp1 = new Especial(peso=1000, color ="verde", velMax= 1, capacidad = 2)
+    const pedido1 = new pedido(distanciaARecorrer=960,tiempoMaximo=8,cantidadPasajeros=4)
+    const pedido2 = new pedido2(distanciaARecorrer=960,tiempoMaximo=6,cantidadPasajeros=4)
+    
+    method initialize(){
+      deportes.agregarAFlota(cachito)
+      deportes.agregarAFlota(esp1)
+      deportes.agregarAFlota(pedido1)
+      deportes.agregarAFlota(pedido2)
+  
+  }
+  test "el totl de pasajeros en la dependecia de deportes es 8" {
+    assert.equals(8, deportes.totalPasajerosEnPedidos())
+  }
+  
+test "todos los pedidos de deportes tienen incompatible un color " {
+  assert.that(deportes.todosLosPedidosTienenIncompatible("azul"))
+}
+
+
+
+test "probar q al relajarr todos los pedidos, pedido1 queda en 9 y ´pedido 2 en 7" {
+  deportes.relajarTodosLosPedidosHechos()
+  assert.equals(9, pedido1.tiempoMaximo())
+  assert.equals(7, pedido2.tiempoMaximo())
+
+}
+
+  
+  }

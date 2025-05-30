@@ -21,9 +21,6 @@ class Corsa{
     self.error(self.color().toString() + " no es un color valido") 
   }
 
-  method puedeSatisfacerPedido(){
-    return ( self.velMax() - pedidos.velocidadRequerida() ) > 10
-  }
 
 }
 // new Corsa(color = "verde")

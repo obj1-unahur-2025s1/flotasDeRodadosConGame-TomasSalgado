@@ -15,6 +15,14 @@ class Dependencia {
         flota.remove(rodado)
     }
 
+    method agregarPedido(unPedido){
+        pedidosHechos.add(unPedido)
+    }
+
+    method sacarPedido(unPedido){
+        pedidosHechos.remove(unPedido)
+    }
+
     method pesoTotalFlota(){
         return flota.sum({r => r.peso()})
     }
@@ -55,6 +63,19 @@ class Dependencia {
         return pedidosHechos.sum({p => p.cantidadPasajeros()})
     }
 
+    method pedidosQueNoPuedenSerSatisfechos(){
+        return pedidosHechos.filter({p => not self.hayAlgunRodadoQueSatisfaceUnPedido(p)})
+    }
+
+    method hayAlgunRodadoQueSatisfaceUnPedido(pedido){
+        flota.any({a => pedido.puedeSatisfacerPedido(a)})
+    }
     
-    
+    method esColorIncompatibleParaTodosLosPedidos(unColor){
+        return pedidosHechos.all({c => c.coloresIncompatibles().contains(unColor)})
+    }
+
+    method relajarTodosLosPedidosHechos(){
+        pedidosHechos.forEach({p => p.relajar()})
+    }
 }
